@@ -3,10 +3,16 @@ package com.example.basicquiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -23,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
 
         //Initialize the views
@@ -33,7 +40,6 @@ public class MainActivity extends AppCompatActivity {
         answer3 = findViewById(R.id.answer3Btn);
         answer4 = findViewById(R.id.answer4Btn);
 
-        shareBtn = findViewById(R.id.shareQuestion);
         quizModalArrayList = new ArrayList<>();
 
         random = new Random();
@@ -92,9 +98,37 @@ public class MainActivity extends AppCompatActivity {
               }
           });
 
+    }
+
+    private void scoreSheet(){
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(MainActivity.this);
+        View bottomSheet = LayoutInflater.from(getApplicationContext()).inflate(R.layout.score_bottom_sheet, (LinearLayout)findViewById(R.id.bottomScoreSheet));
+        TextView score = bottomSheet.findViewById(R.id.idScore);
+        Button restartQuiz = bottomSheet.findViewById(R.id.btnRestart);
+        Button share = bottomSheet.findViewById(R.id.btnShare);
+        score.setText("You Scored\n"+currentScore+"/04");
+
+        restartQuiz.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                currentPos = random.nextInt(quizModalArrayList.size());
+                sendDataToUi(currentPos);
+                questionAttempted = 1;
+                currentScore = 0;
+                bottomSheetDialog.dismiss();
+
+            }
+        });
+
+        //Display BottomSheet dialog
+        bottomSheetDialog.setCancelable(false);
+        bottomSheetDialog.setContentView(bottomSheet);
+        bottomSheetDialog.show();
+
 
 
     }
+
 
 
     //ArrayList to hold the questions
@@ -114,13 +148,17 @@ public class MainActivity extends AppCompatActivity {
     private void sendDataToUi(int currentPos){
         questionNum.setText("Question : "+questionAttempted+"/4");
 
-        question.setText(quizModalArrayList.get(currentPos).getQuestion());
-        answer1.setText(quizModalArrayList.get(currentPos).getAnswer1());
-        answer2.setText(quizModalArrayList.get(currentPos).getAnswer2());
-        answer3.setText(quizModalArrayList.get(currentPos).getAnswer3());
-        answer4.setText(quizModalArrayList.get(currentPos).getAnswer4());
+        if (questionAttempted == 4){
+            scoreSheet();
+        }
+        else {
+            question.setText(quizModalArrayList.get(currentPos).getQuestion());
+            answer1.setText(quizModalArrayList.get(currentPos).getAnswer1());
+            answer2.setText(quizModalArrayList.get(currentPos).getAnswer2());
+            answer3.setText(quizModalArrayList.get(currentPos).getAnswer3());
+            answer4.setText(quizModalArrayList.get(currentPos).getAnswer4());
 
-
+        }
 
     }
 
