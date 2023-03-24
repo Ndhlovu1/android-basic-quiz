@@ -3,11 +3,13 @@ package com.example.basicquiz;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<QuizModal> quizModalArrayList;
     int currentScore = 0, questionAttempted = 1, currentPos;
     private ImageView shareBtn;
+    Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,8 +33,60 @@ public class MainActivity extends AppCompatActivity {
         answer3 = findViewById(R.id.answer3Btn);
         answer4 = findViewById(R.id.answer4Btn);
         shareBtn = findViewById(R.id.shareQuestion);
-        currentPos = 0;
+        random = new Random();
+        getQuestion(quizModalArrayList);
+        currentPos = random.nextInt(quizModalArrayList.size());
         sendDataToUi(currentPos);
+
+          answer1.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  if(quizModalArrayList.get(currentPos).getCorrectAnswer().trim().toLowerCase().equals(answer1.getText().toString().trim().toLowerCase())){
+                        currentScore++;
+                  }
+                  questionAttempted++;
+                  currentPos = random.nextInt(quizModalArrayList.size());
+                  sendDataToUi(currentPos);
+
+              }
+          });
+
+          answer2.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  if(quizModalArrayList.get(currentPos).getCorrectAnswer().trim().toLowerCase().equals(answer2.getText().toString().trim().toLowerCase())){
+                      currentScore++;
+                  }
+                  questionAttempted++;
+                  currentPos = random.nextInt(quizModalArrayList.size());
+                  sendDataToUi(currentPos);
+
+              }
+          });
+
+          answer3.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  if(quizModalArrayList.get(currentPos).getCorrectAnswer().trim().toLowerCase().equals(answer3.getText().toString().trim().toLowerCase())){
+                      currentScore++;
+                  }
+                  questionAttempted++;
+                  currentPos = random.nextInt(quizModalArrayList.size());
+                  sendDataToUi(currentPos);
+              }
+          });
+
+          answer4.setOnClickListener(new View.OnClickListener() {
+              @Override
+              public void onClick(View view) {
+                  if(quizModalArrayList.get(currentPos).getCorrectAnswer().trim().toLowerCase().equals(answer4.getText().toString().trim().toLowerCase())){
+                      currentScore++;
+                  }
+                  questionAttempted++;
+                  currentPos = random.nextInt(quizModalArrayList.size());
+                  sendDataToUi(currentPos);
+              }
+          });
 
 
 
@@ -60,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
         answer2.setText(quizModalArrayList.get(currentPos).getAnswer2());
         answer3.setText(quizModalArrayList.get(currentPos).getAnswer3());
         answer4.setText(quizModalArrayList.get(currentPos).getAnswer4());
+
 
 
     }
