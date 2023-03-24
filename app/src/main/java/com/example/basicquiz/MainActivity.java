@@ -32,8 +32,12 @@ public class MainActivity extends AppCompatActivity {
         answer2 = findViewById(R.id.answer2Btn);
         answer3 = findViewById(R.id.answer3Btn);
         answer4 = findViewById(R.id.answer4Btn);
+
         shareBtn = findViewById(R.id.shareQuestion);
+        quizModalArrayList = new ArrayList<>();
+
         random = new Random();
+
         getQuestion(quizModalArrayList);
         currentPos = random.nextInt(quizModalArrayList.size());
         sendDataToUi(currentPos);

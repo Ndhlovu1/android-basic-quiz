@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">BasicQuiz</string>
+    <string name="answer_2">Answer 2</string>
+    <string name="answer_3">Answer 3</string>
+    <string name="question">Question</string>
+    <string name="number_of_questions">Number of Questions</string>
+    <string name="answer_1">Answer 1</string>
+    <string name="answer_4">Answer 4</string>
+    <string name="todo">TODO</string>
 </resources>
