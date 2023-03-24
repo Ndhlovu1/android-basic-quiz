@@ -2,6 +2,7 @@ package com.example.basicquiz;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,7 +24,6 @@ public class MainActivity extends AppCompatActivity {
     private Button answer1,answer2,answer3,answer4;
     private ArrayList<QuizModal> quizModalArrayList;
     int currentScore = 0, questionAttempted = 1, currentPos;
-    private ImageView shareBtn;
     Random random;
 
     @Override
@@ -107,6 +107,23 @@ public class MainActivity extends AppCompatActivity {
         Button restartQuiz = bottomSheet.findViewById(R.id.btnRestart);
         Button share = bottomSheet.findViewById(R.id.btnShare);
         score.setText("You Scored\n"+currentScore+"/04");
+
+        share.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent shareIntent = new Intent(Intent.ACTION_SEND);
+                shareIntent.setType("text/plain");
+                String title = "NUST BASIC QUIZ";
+                String msg = "Hey! I scored\n"+currentScore+"/04";
+
+                shareIntent.setAction(Intent.ACTION_SEND);
+                shareIntent.putExtra(Intent.EXTRA_TEXT,title);
+                shareIntent.putExtra(Intent.EXTRA_TEXT, msg);
+                startActivity(Intent.createChooser(shareIntent, "Share To"));
+
+            }
+        });
 
         restartQuiz.setOnClickListener(new View.OnClickListener() {
             @Override
